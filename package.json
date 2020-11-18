@@ -4,7 +4,7 @@
   "description": "A companion watch server to receive and save changes coming from the A-Frame Inspector.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js -- tests/*.html",
+    "start": "nodemon index.js -- public/*.html",
     "test": "NODE_ENV=test mocha --watch tests/*.test.js"
   },
   "repository": {

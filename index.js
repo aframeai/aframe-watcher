@@ -13,30 +13,32 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello!');
-});
+// publish a-frame files
+app.use(express.static('public'));
 
 app.post('/save', (req, res) => {
+
   const changes = req.body;
 
-  // Prompt to confirm.
-  console.log([
-    `\nA-Frame Inspector from ${req.hostname} has requested the following changes:\n`,
-    `${prettyPrintChanges(changes)}`,
-    'Do you allow the A-Frame Inspector Watcher to write these updates directly ' +
-    'within this directory?'
-  ].join('\n'));
+  // use an environment variable to control mutability
+  // TODO: password check
+  let mutable = process.env.MUTABLE;
 
-  const prompt = new Confirm('Y/n');
-  prompt.run().then(answer => {
-    // Denied.
-    if (!answer) { res.sendStatus(403); }
+  if (!mutable) { 
+    // Log illegal access
+    console.log(`Illegal access from ${req.hostname}`);
+    // Reject
+    res.sendStatus(403); 
+    return;
+  }
+  
+  // Log access and changes
+  console.log(`Scene modified by ${req.hostname}:\n${prettyPrintChanges(changes)}`);
+  // Accept  
+  res.sendStatus(200);
+  sync(changes);
 
-    // Accepted.
-    sync(changes);
-    res.sendStatus(200);
-  });
+
 });
 
 function prettyPrintChanges (changes) {

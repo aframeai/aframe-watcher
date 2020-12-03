@@ -4,6 +4,7 @@ const cors = require('cors');
 const express = require('express');
 const fs = require('fs');
 const glob = require('glob');
+const child_process = require('child_process');
 
 let files;
 
@@ -37,6 +38,7 @@ app.post('/save', (req, res) => {
   res.sendStatus(200);
   sync(changes);
 
+  // refresh glitch
 
 });
 
@@ -64,6 +66,8 @@ function sync (changes) {
     const contents = updateFile(file, fs.readFileSync(file, 'utf-8'), changes);
     fs.writeFileSync(file, contents);
   });
+  // refresh glitch so changes show up in the editor
+  child_process.exec('refresh');
   console.log('Sync complete.');
 }
 

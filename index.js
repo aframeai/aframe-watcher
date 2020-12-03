@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const bodyParser = require('body-parser');
-const Confirm = require('prompt-confirm');
 const cors = require('cors');
 const express = require('express');
 const fs = require('fs');

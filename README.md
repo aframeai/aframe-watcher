@@ -25,21 +25,4 @@ Currently the watcher only handles entity updates that have defined IDs:
 ### Security
 
 Currently anyone who has access to your glitch can modify your HTML on your server (!)  
-Make your glitch private if you don't want that.  
-Make changes and hit save:
-
-
-
-Then accept the changes from the command line:
-
-![](https://user-images.githubusercontent.com/674727/49696426-80ba7100-fb5e-11e8-93b5-6f79cafa6b5a.png)
-
-The watcher will then modify your HTML files in place.
-
-### Scope
-
-Currently only handles entity updates that have defined IDs:
-
-```
-<a-entity id="updateMe"></a-entity>
-```
+Make your glitch private if you don't want that.
